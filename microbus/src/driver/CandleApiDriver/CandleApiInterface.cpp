@@ -17,6 +17,7 @@ CandleApiInterface::CandleApiInterface(CandleApiDriver *driver, candle_handle ha
 
     _timings
         // sample point: 50.0%
+        << CandleApiTiming(48000000,    5000, 500, 960, 3, 5)
         << CandleApiTiming(48000000,   10000, 500, 300, 6, 8)
         << CandleApiTiming(48000000,   20000, 500, 150, 6, 8)
         << CandleApiTiming(48000000,   50000, 500,  60, 6, 8)
@@ -29,6 +30,7 @@ CandleApiInterface::CandleApiInterface(CandleApiDriver *driver, candle_handle ha
         << CandleApiTiming(48000000, 1000000, 500,   3, 6, 8)
 
         // sample point: 62.5%
+        << CandleApiTiming(48000000,    5000, 625, 738, 6, 5)
         << CandleApiTiming(48000000,   10000, 625, 300, 8, 6)
         << CandleApiTiming(48000000,   20000, 625, 150, 8, 6)
         << CandleApiTiming(48000000,   50000, 625,  60, 8, 6)
@@ -41,6 +43,7 @@ CandleApiInterface::CandleApiInterface(CandleApiDriver *driver, candle_handle ha
         << CandleApiTiming(48000000, 1000000, 625,   3, 8, 6)
 
         // sample point: 75.0%
+        << CandleApiTiming(48000000,    5000, 750, 800, 7, 3)
         << CandleApiTiming(48000000,   10000, 750, 300, 10, 4)
         << CandleApiTiming(48000000,   20000, 750, 150, 10, 4)
         << CandleApiTiming(48000000,   50000, 750,  60, 10, 4)
@@ -53,6 +56,7 @@ CandleApiInterface::CandleApiInterface(CandleApiDriver *driver, candle_handle ha
         << CandleApiTiming(48000000, 1000000, 750,   3, 10, 4)
 
         // sample point: 87.5%
+        << CandleApiTiming(48000000,    5000, 875, 600, 12, 2)
         << CandleApiTiming(48000000,   10000, 875, 300, 12, 2)
         << CandleApiTiming(48000000,   20000, 875, 150, 12, 2)
         << CandleApiTiming(48000000,   50000, 875,  60, 12, 2)
