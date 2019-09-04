@@ -1,5 +1,7 @@
 usb <-> can
 
 TODO: 
-  1. TCAN330
-  2. ADM3053
+  1. ADM3053 can隔离芯片
+  2. cp2102 + ADUM1201ARZ-RL7 uart隔离
+  3. 
+  
