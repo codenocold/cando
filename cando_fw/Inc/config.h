@@ -1,7 +1,7 @@
 #ifndef __CONFIG_H__
 #define __CONFIG_H__
 
-#define CAN_QUEUE_SIZE 64
+#define CAN_QUEUE_SIZE 200
 
 #define USBD_VID                     0x1d50
 #define USBD_PID_FS                  0x606f
