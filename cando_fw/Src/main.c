@@ -5,7 +5,6 @@
 #include "flash.h"
 #include "led.h"
 #include "can.h"
-#include "dfu.h"
 #include "queue.h"
 #include "usbd_def.h"
 #include "usbd_desc.h"
@@ -19,7 +18,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+//#define DEBUG
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -36,7 +35,6 @@ TIM_HandleTypeDef htim2;
 queue_t *q_frame_pool;
 queue_t *q_from_host;
 queue_t *q_to_host;
-uint32_t received_count = 0;
 
 /* Private function prototypes -----------------------------------------------*/
 static bool send_to_host_or_enqueue(struct gs_host_frame *frame);
@@ -53,7 +51,6 @@ static void MX_TIM2_Init(void);
   */
 int main(void)
 {
-	uint32_t tick = 0;
 	uint32_t last_can_error_status = 0;
 	
 	/* Reset of all peripherals, Initializes the Flash interface and the Systick. */
@@ -61,8 +58,10 @@ int main(void)
 	
 	/* Configure the system clock */
 	SystemClock_Config();
-	
+
+#ifndef DEBUG
 	enable_readout_protect();
+#endif
 	
 	MX_GPIO_Init();
 	MX_TIM2_Init();
@@ -79,7 +78,16 @@ int main(void)
 	q_from_host  = queue_create(CAN_QUEUE_SIZE);
 	q_to_host    = queue_create(CAN_QUEUE_SIZE);
 
-	struct gs_host_frame *msgbuf = calloc(CAN_QUEUE_SIZE, sizeof(struct gs_host_frame));
+	struct gs_host_frame *msgbuf;
+#ifdef DEBUG
+	msgbuf = calloc(CAN_QUEUE_SIZE, sizeof(struct gs_host_frame));
+#else
+	if(is_bad_boy()){
+		msgbuf = calloc(CAN_QUEUE_SIZE/2, sizeof(struct gs_host_frame));
+	}else{
+		msgbuf = calloc(CAN_QUEUE_SIZE, sizeof(struct gs_host_frame));
+	}
+#endif
 	for (unsigned i=0; i<CAN_QUEUE_SIZE; i++) {
 		queue_push_back(q_frame_pool, &msgbuf[i]);
 	}
@@ -92,18 +100,22 @@ int main(void)
 
 	HAL_GPIO_WritePin(CAN_SILENT_GPIO_Port, CAN_SILENT_Pin, GPIO_PIN_RESET);
 	
-	for(tick=0; tick<2; tick++){
-		LED_SET();
-		HAL_Delay(30);
-		LED_CLR();
-		HAL_Delay(100);
-	}
+	// Startup indicat
+	LED_SET();
+	HAL_Delay(30);
+	LED_CLR();
+	HAL_Delay(100);
+	LED_SET();
+	HAL_Delay(30);
+	LED_CLR();
+	HAL_Delay(100);
 	
 	while(1){
 		struct gs_host_frame *frame = queue_pop_front(q_from_host);
 		if (frame != 0) { // send can message from host
 			if (can_send(&hCAN, frame)) {
 				// Echo sent frame back to host
+				frame->echo_id = 0;	// Echo frame
 				frame->timestamp_us = timer_get();
 				send_to_host_or_enqueue(frame);
 				
@@ -120,8 +132,6 @@ int main(void)
 		if (can_is_rx_pending(&hCAN)) {
 			struct gs_host_frame *frame = queue_pop_front(q_frame_pool);
 			if ((frame != 0) && can_receive(&hCAN, frame)) {
-             			received_count++;
-
 				frame->timestamp_us = timer_get();
 				frame->echo_id = 0xFFFFFFFF; // not a echo frame
 				frame->channel = 0;
@@ -131,11 +141,9 @@ int main(void)
 				send_to_host_or_enqueue(frame);
 
 				led_indicate_trx(&hLED);
-
 			} else {
 				queue_push_back(q_frame_pool, frame);
 			}
-
 		}
 
 		uint32_t can_err = can_get_error_status(&hCAN);
@@ -143,7 +151,7 @@ int main(void)
 			struct gs_host_frame *frame = queue_pop_front(q_frame_pool);
 			if (frame != 0) {
 				frame->timestamp_us = timer_get();
-				if (can_parse_error_status(can_err, frame)) {
+				if (can_parse_error_status(&hCAN, can_err, frame)) {
 					send_to_host_or_enqueue(frame);
 					last_can_error_status = can_err;
 				} else {
@@ -153,19 +161,6 @@ int main(void)
 		}
 
 		led_update(&hLED);
-		
-		if(HAL_GetTick()-tick > 1000){
-			tick = HAL_GetTick();
-			if(is_bad_boy()){
-				queue_pop_front(q_frame_pool);
-				queue_pop_front(q_from_host);
-				queue_pop_front(q_to_host);
-			}
-		}
-
-//		if (USBD_GS_CAN_DfuDetachRequested(&hUSB)) {
-//			dfu_run_bootloader();
-//		}
 	}
 }
 

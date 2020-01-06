@@ -1,8 +1,9 @@
 #include "flash.h"
 #include "stm32f0xx_hal.h"
 #include <string.h>
+#include "usbd_gs_can.h"
 
-#define NUM_CHANNEL 1
+#define NUM_CHANNEL NUM_CAN_CHANNEL
 
 typedef struct {
 	uint32_t user_id[NUM_CHANNEL];
@@ -11,7 +12,7 @@ typedef struct {
 static flash_data_t flash_data_ram;
 static const flash_data_t flash_data_rom __attribute__((at(0x0801F800)));	// Page 63, Page size 2Kbytes
 
-void flash_load()
+void flash_load(void)
 {
 	memcpy(&flash_data_ram, &flash_data_rom, sizeof(flash_data_t));
 }
@@ -19,12 +20,10 @@ void flash_load()
 bool flash_set_user_id(uint8_t channel, uint32_t user_id)
 {
 	if (channel<NUM_CHANNEL) {
-
 		if (flash_data_ram.user_id[channel] != user_id) {
 			flash_data_ram.user_id[channel] = user_id;
 			flash_flush();
 		}
-
 		return true;
 	} else {
 		return false;
@@ -40,7 +39,7 @@ uint32_t flash_get_user_id(uint8_t channel)
 	}
 }
 
-void flash_flush()
+void flash_flush(void)
 {
 	FLASH_EraseInitTypeDef erase_pages;
 	erase_pages.PageAddress = (uint32_t)&flash_data_rom;

@@ -12,6 +12,7 @@ void can_init(can_data_t *hcan, CAN_TypeDef *instance)
 	itd.Alternate = GPIO_AF4_CAN;
 	HAL_GPIO_Init(GPIOB, &itd);
 
+	// // Set default Baudrate: 500K Samplepoint 87.5%
 	hcan->instance   = instance;
 	hcan->brp        = 6;
 	hcan->phase_seg1 = 13;
@@ -196,9 +197,9 @@ uint32_t can_get_error_status(can_data_t *hcan)
 	return can->ESR;
 }
 
-bool can_parse_error_status(uint32_t err, struct gs_host_frame *frame)
+bool can_parse_error_status(can_data_t *hcan, uint32_t err, struct gs_host_frame *frame)
 {
-	frame->echo_id = 0xFFFFFFFF;
+	frame->echo_id = 0xFFFFFFFF;	// not a echo frame
 	frame->can_id  = CAN_ERR_FLAG | CAN_ERR_CRTL;
 	frame->can_dlc = CAN_ERR_DLC;
 	frame->data[0] = CAN_ERR_LOSTARB_UNSPEC;
@@ -214,10 +215,16 @@ bool can_parse_error_status(uint32_t err, struct gs_host_frame *frame)
 		frame->can_id |= CAN_ERR_BUSOFF;
 	}
 
-	/*
-	uint8_t tx_error_cnt = (err>>16) & 0xFF;
-	uint8_t rx_error_cnt = (err>>24) & 0xFF;
-	*/
+	frame->data[6] = (err>>16) & 0xFF;	// tx_error_cnt
+	frame->data[7] = (err>>24) & 0xFF;	// rx_error_cnt
+	
+	// Rx overflow
+	if(hcan->instance->RF0R & CAN_RF0R_FOVR0){
+		frame->flags = GS_CAN_FLAG_OVERFLOW; 
+		hcan->instance->RF0R &= ~CAN_RF0R_FOVR0;
+	}else{
+		frame->flags = 0;
+	}
 
 	if (err & CAN_ESR_EPVF) {
 		frame->data[1] |= CAN_ERR_CRTL_RX_PASSIVE | CAN_ERR_CRTL_TX_PASSIVE;
@@ -225,8 +232,8 @@ bool can_parse_error_status(uint32_t err, struct gs_host_frame *frame)
 		frame->data[1] |= CAN_ERR_CRTL_RX_WARNING | CAN_ERR_CRTL_TX_WARNING;
 	}
 
-	uint8_t lec = (err>>4) & 0x07;
-	if (lec!=0) { /* protocol error */
+	uint8_t lec = (err >> 4) & 0x07;
+	if (lec != 0) { /* protocol error */
 		switch (lec) {
 			case 0x01: /* stuff error */
 				frame->can_id |= CAN_ERR_PROT;

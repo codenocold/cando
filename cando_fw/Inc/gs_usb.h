@@ -12,23 +12,21 @@
 #define GS_CAN_MODE_NORMAL                      0
 #define GS_CAN_MODE_LISTEN_ONLY                 (1<<0)
 #define GS_CAN_MODE_LOOP_BACK                   (1<<1)
-#define GS_CAN_MODE_TRIPLE_SAMPLE               (1<<2)
+#define GS_CAN_MODE_TRIPLE_SAMPLE               (1<<2)	// ST bxCAN not support
 #define GS_CAN_MODE_ONE_SHOT                    (1<<3)
 #define GS_CAN_MODE_HW_TIMESTAMP                (1<<4)
-
 #define GS_CAN_MODE_PAD_PKTS_TO_MAX_PKT_SIZE    (1<<7)
 
-#define GS_CAN_FEATURE_LISTEN_ONLY       	(1<<0)
+#define GS_CAN_FEATURE_LISTEN_ONLY       		(1<<0)
 #define GS_CAN_FEATURE_LOOP_BACK                (1<<1)
 #define GS_CAN_FEATURE_TRIPLE_SAMPLE            (1<<2)
 #define GS_CAN_FEATURE_ONE_SHOT                 (1<<3)
 #define GS_CAN_FEATURE_HW_TIMESTAMP             (1<<4)
 #define GS_CAN_FEATURE_IDENTIFY                 (1<<5)
 #define GS_CAN_FEATURE_USER_ID                  (1<<6)
-
 #define GS_CAN_FEATURE_PAD_PKTS_TO_MAX_PKT_SIZE (1<<7)
 
-#define GS_CAN_FLAG_OVERFLOW 1
+#define GS_CAN_FLAG_OVERFLOW 	1
 
 #define CAN_EFF_FLAG 0x80000000U /* EFF/SFF is set in the MSB */
 #define CAN_RTR_FLAG 0x40000000U /* remote transmission request */
@@ -109,7 +107,6 @@
 #define CAN_ERR_TRX_CANL_SHORT_TO_GND  0x70 /* 0111 0000 */
 #define CAN_ERR_TRX_CANL_SHORT_TO_CANH 0x80 /* 1000 0000 */
 
-
 enum gs_usb_breq {
 	GS_USB_BREQ_HOST_FORMAT = 0,
 	GS_USB_BREQ_BITTIMING,
@@ -128,15 +125,6 @@ enum gs_can_mode {
 	GS_CAN_MODE_RESET = 0,
 	/* starts a channel */
 	GS_CAN_MODE_START
-};
-
-enum gs_can_state {
-	GS_CAN_STATE_ERROR_ACTIVE = 0,
-	GS_CAN_STATE_ERROR_WARNING,
-	GS_CAN_STATE_ERROR_PASSIVE,
-	GS_CAN_STATE_BUS_OFF,
-	GS_CAN_STATE_STOPPED,
-	GS_CAN_STATE_SLEEPING
 };
 
 /* data types passed between host and device */
@@ -162,12 +150,6 @@ __packed struct gs_device_mode {
 	u32 flags;
 };
 
-__packed struct gs_device_state {
-	u32 state;
-	u32 rxerr;
-	u32 txerr;
-};
-
 __packed struct gs_device_bittiming {
 	u32 prop_seg;
 	u32 phase_seg1;
@@ -190,22 +172,17 @@ __packed struct gs_device_bt_const {
 };
 
 __packed struct gs_host_frame {
-	u32 echo_id;
+	u32 echo_id;	// 0: echo; 0xFFFFFFFF: not echo
 	u32 can_id;
 
 	u8 can_dlc;
 	u8 channel;
-	u8 flags;
+	u8 flags;		// CAN Rx FIFO Overflow indicate
 	u8 reserved;
 
 	u8 data[8];
 
 	u32 timestamp_us;
-};
-
-struct gs_tx_context {
-	struct gs_can *dev;
-	unsigned int echo_id;
 };
 
 #endif
