@@ -71,8 +71,8 @@ bool __stdcall DLL cando_malloc(cando_list_handle list, uint8_t index, cando_han
 bool __stdcall DLL cando_free(cando_handle hdev);
 bool __stdcall DLL cando_open(cando_handle hdev);
 bool __stdcall DLL cando_close(cando_handle hdev);
-wchar_t __stdcall DLL *cando_get_path(cando_handle hdev);
-bool __stdcall DLL cando_get_dev_info(cando_handle hdev, uint32_t *sw_version, uint32_t *hw_version);
+wchar_t __stdcall DLL *cando_get_serial_number_str(cando_handle hdev);
+bool __stdcall DLL cando_get_dev_info(cando_handle hdev, uint32_t *fw_version, uint32_t *hw_version);
 bool __stdcall DLL cando_set_timing(cando_handle hdev, cando_bittiming_t *timing);
 
 bool __stdcall DLL cando_start(cando_handle hdev, uint32_t mode);

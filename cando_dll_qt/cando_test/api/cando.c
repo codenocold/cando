@@ -141,15 +141,15 @@ bool __stdcall DLL cando_close(cando_handle hdev)
     return true;
 }
 
-bool __stdcall DLL cando_get_dev_info(cando_handle hdev, uint32_t *sw_version, uint32_t *hw_version)
+bool __stdcall DLL cando_get_dev_info(cando_handle hdev, uint32_t *fw_version, uint32_t *hw_version)
 {
     cando_device_t *dev = (cando_device_t*)hdev;
-    *sw_version = dev->dconf.sw_version;
+    *fw_version = dev->dconf.sw_version;
     *hw_version = dev->dconf.hw_version;
     return true;
 }
 
-wchar_t __stdcall DLL *cando_get_path(cando_handle hdev)
+wchar_t __stdcall DLL *cando_get_serial_number_str(cando_handle hdev)
 {
     if (hdev==NULL) {
         return NULL;
