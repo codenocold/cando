@@ -28,6 +28,7 @@ typedef enum {
     CANDO_MODE_LISTEN_ONLY   = (1<<0),
     CANDO_MODE_LOOP_BACK     = (1<<1),
     CANDO_MODE_ONE_SHOT      = (1<<3),
+    CANDO_MODE_NO_ECHO_BACK  = (1<<8),
 } cando_flags_t;
 
 enum {

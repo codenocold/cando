@@ -16,6 +16,7 @@
 #define GS_CAN_MODE_ONE_SHOT                    (1<<3)
 #define GS_CAN_MODE_HW_TIMESTAMP                (1<<4)
 #define GS_CAN_MODE_PAD_PKTS_TO_MAX_PKT_SIZE    (1<<7)
+#define GS_CAN_MODE_NO_ECHO_BACK				(1<<8)
 
 #define GS_CAN_FEATURE_LISTEN_ONLY       		(1<<0)
 #define GS_CAN_FEATURE_LOOP_BACK                (1<<1)

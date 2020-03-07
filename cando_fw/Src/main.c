@@ -35,6 +35,7 @@ TIM_HandleTypeDef htim2;
 queue_t *q_frame_pool;
 queue_t *q_from_host;
 queue_t *q_to_host;
+bool gEchoBackEnable = true;
 
 /* Private function prototypes -----------------------------------------------*/
 static bool send_to_host_or_enqueue(struct gs_host_frame *frame);
@@ -114,10 +115,12 @@ int main(void)
 		struct gs_host_frame *frame = queue_pop_front(q_from_host);
 		if (frame != 0) { // send can message from host
 			if (can_send(&hCAN, frame)) {
-				// Echo sent frame back to host
-				frame->echo_id = 0;	// Echo frame
-				frame->timestamp_us = timer_get();
-				send_to_host_or_enqueue(frame);
+				if(gEchoBackEnable) {
+					// Echo sent frame back to host
+					frame->echo_id = 0;	// Echo frame
+					frame->timestamp_us = timer_get();
+					send_to_host_or_enqueue(frame);
+				}
 				
 				led_indicate_trx(&hLED);
 			} else {
