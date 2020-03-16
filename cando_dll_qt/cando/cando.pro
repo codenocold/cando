@@ -25,6 +25,10 @@ HEADERS += \
     cando_ctrl_req.h\
     cando_defs.h
 
+QMAKE_CFLAGS += -Wl,--kill-at
+QMAKE_CXXFLAGS += -Wl,--kill-at
+QMAKE_LFLAGS += -Wl,--kill-at
+
 win32: LIBS += -lSetupApi
 win32: LIBS += -lOle32
 win32: LIBS += -lwinusb

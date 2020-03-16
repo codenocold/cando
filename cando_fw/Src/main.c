@@ -120,6 +120,8 @@ int main(void)
 					frame->echo_id = 0;	// Echo frame
 					frame->timestamp_us = timer_get();
 					send_to_host_or_enqueue(frame);
+				}else {
+					queue_push_back(q_frame_pool, frame);
 				}
 				
 				led_indicate_trx(&hLED);

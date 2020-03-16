@@ -4,7 +4,7 @@
 #define CAN_QUEUE_SIZE 200
 
 #define SW_VERSION		32  // software version
-#define HW_VERSION		12  // hardware version
+#define HW_VERSION		13  // hardware version
 
 #define USBD_VID                     0x1d50
 #define USBD_PID_FS                  0x606f
