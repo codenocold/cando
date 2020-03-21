@@ -83,7 +83,6 @@ send_frame.data = [0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08]
 # 循环发送 500 条数据帧
 for i in range(500):
     # 发送数据帧
-    send_frame.data[0] = i
     dev_frame_send(dev_lists[0], send_frame)
     time.sleep(0.001)  # 睡眠 1 ms
 

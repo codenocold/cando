@@ -1,4 +1,7 @@
 Author: Codenocold
+	v 1.0.6
+    Add device no echo back mode for higher speed transmit application
+Author: Codenocold
 	v 1.0.5
     Match Linux Socket CAN interface
 

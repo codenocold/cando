@@ -2,10 +2,12 @@ Cando USB-CAN 用户手册
 ===
 ***适用于 Cando & Cando_pro***
 
+技术支持：1107795287@qq.com、codenocold@gmail.com
+
 [TOC]
 # 1 Cando & Cando_pro 介绍
 ## 1.1 Cando
-![](/img/cando.jpg)
+![](img/cando.jpg)
 
 ***Cando*** 是一款低成本的，简单好用的USB-CAN转换模块，支持Windos、Linux、树莓派等系统。USB通信基于USB buck传输，保证了高速通信下的速度和稳定，并且在Windos、Linux系统均无需安装驱动。因为我们在Windows系统适配了微软自带WCID(**W**indows **C**ompatible **ID**) 驱动。在Linux系统适配了socketcan接口，您可以直接使用can-utils工具进行操作。
 
@@ -31,15 +33,15 @@ Cando USB-CAN 用户手册
 
 尺寸：
 
-![](/img/cando_size.jpg)
+![](img/cando_size.jpg)
 
 布局：
 
-![](/img/cando_map.jpg)
+![](img/cando_map.jpg)
 
 ## 1.2 Cando_pro
 
-![](/img/cando_pro.jpg)
+![](img/cando_pro.jpg)
 
 ***Cando_pro*** 是***Cando***的升级版本，使用了高度集成的全隔离芯片 2.5KV rms 信号和电源隔离，同时增加了更多的硬件保护电路，抗干扰能力更强，适合工业调试应用或电机类应用。同样支持Windos、Linux、树莓派等系统。USB通信基于USB buck传输，保证了高速通信下的速度和稳定，并且在Windos、Linux系统均无需安装驱动。因为我们在Windows系统适配了微软自带WCID(**W**indows **C**ompatible **ID**) 驱动。在Linux系统适配了socketcan接口，您可以直接使用can-utils工具命令对 ***cando*** 操作。
 
@@ -66,17 +68,17 @@ Cando USB-CAN 用户手册
 
 尺寸：
 
-![](/img/cando_pro_size.jpg)
+![](img/cando_pro_size.jpg)
 
 布局：
 
-![](/img/cando_pro_map.jpg)
+![](img/cando_pro_map.jpg)
 
 # 2 microbus: CAN总线调试软件 (适用于Windows, Linux)
 
 ## 2.1 microbus 简介
 
-![](/img/microbus_7.jpg)
+![](img/microbus_7.jpg)
 
 ***microbus*** 是 ***Cando & Cando_pro*** 专用的、简单易用的can总线调试软件，麻雀虽小五脏俱全，对于一般的can调试开发完全够用，而且专门针对汽车逆向工程增加了通过can id分类接收到的can数据帧，并且当某个id的数据帧活跃时会进行高亮显示以便于观察分析。
 
@@ -101,7 +103,7 @@ Cando USB-CAN 用户手册
 
 Windows启动后界面：
 
-![](/img/microbus_1.jpg)
+![](img/microbus_1.jpg)
 
 ***Ubuntu***
 
@@ -111,23 +113,23 @@ Windows启动后界面：
 ```shell
 sudo apt-get install libnl-route-3-dev
 ```
-进入microbus_dist_ubuntu文件夹下以**管理员权限**运行 microbus
+进入microbus_dist_ubuntu文件夹下，将 canifconfig、microbus 文件增加可**执行权限**，然后以**管理员权限**运行 microbus
 ```shell
 sudo ./microbus
 ```
 Ubuntu启动后界面：
 
-![](/img/Ubuntu_0.jpg)
+![](img/Ubuntu_0.jpg)
 
 ### 2.2.3 启动 Cando 或 Cando_pro
 
 microbus 启动后的界面：
 
-![microbus 主界面](/img/microbus_0.jpg)
+![microbus 主界面](img/microbus_0.jpg)
 
 点击左上角开始按钮进入设置界面：
 
-![](/img/microbus_2.jpg)
+![](img/microbus_2.jpg)
 
 点击左侧列表中的 cando 0 进行波特率、采样点、工作模式等相关设置，然后点击 OK, 此时cando模块上的 ACT 指示灯亮起指示端口已处于工作状态，此时就可以进行CAN数据的收发操作了。
 
@@ -135,19 +137,19 @@ microbus 启动后的界面：
 
 通过点击设置按钮或开始工作按钮，进入设置界面：
 
-![](/img/microbus_3.jpg)
+![](img/microbus_3.jpg)
 
 点击左侧列表中 Interfaces 下的 Can Databases，然后点击右侧Add Database... 按钮，添加 DBC 文件：
 
-![](/img/microbus_4.jpg)
+![](img/microbus_4.jpg)
 
 添加完成后当接收到相应的数据帧时将在接收窗口中显示解析到的相关信息：
 
-![](/img/microbus_6.jpg)
+![](img/microbus_6.jpg)
 
 可以通过点击接收窗口中的各个数据帧展开查看详细信息
 
-![](/img/microbus_7.jpg)
+![](img/microbus_7.jpg)
 
 # 3 SocketCAN (只适用于Linux)
 
@@ -367,7 +369,7 @@ Python 3.3 以后的版本增加了对SocketCAN的支持。开源库[python-can]
 
 cando.dll 是专门针对Cando和Cando_pro设计的用于二次开发的动态链接库，里边封装了对Cando和Cando_pro的所有操作接口，方便我们快速进行二次开发。cando.dll 是使用MinGW-win32进行编译构建的。注意：cando.dll 只适用于Windos下使用。
 
-***cando_dll_mingw_win32.rar*** [下载链接](https://github.com/codenocold/microbus/releases/download/v0.2.1/cando_dll_mingw_win32.rar)
+***cando_dll.rar*** [下载链接](https://github.com/codenocold/microbus/releases/download/v0.2.1/cando_dll.rar)
 
 ## 4.1 内部变量和结构体
 
@@ -377,6 +379,7 @@ cando.dll 是专门针对Cando和Cando_pro设计的用于二次开发的动态�
 `CANDO_MODE_LISTEN_ONLY` CAN 侦听模式
 `CANDO_MODE_LOOP_BACK` CAN 回环模式
 `CANDO_MODE_ONE_SHOT` CAN 发送失败后不自动重新发送模式
+`CANDO_MODE_NO_ECHO_BACK` CAN 发送数据帧后不向电脑返回echo帧 (默认为返回echo帧)
 
 ### 4.1.2 CAN ID 标志位
 
@@ -613,7 +616,7 @@ cando_example 源代码 [下载链接](https://github.com/codenocold/microbus/re
 
 cando_example 运行界面：
 
-![](/img/cando_example.jpg)
+![](img/cando_example.jpg)
 
 # 5 使用Python库二次开发 (适用于Windows, Linux)
 
@@ -649,6 +652,7 @@ pip install cando
 `CANDO_MODE_LISTEN_ONLY` CAN 侦听模式
 `CANDO_MODE_LOOP_BACK` CAN 回环模式
 `CANDO_MODE_ONE_SHOT` CAN 发送失败后不自动重新发送模式
+`CANDO_MODE_NO_ECHO_BACK` CAN 发送数据帧后不向电脑返回echo帧 (默认为返回echo帧)
 
 ### 5.2.2 CAN ID 标志位
 
@@ -906,3 +910,14 @@ dev_stop(dev_lists[0])
 ### 5.6.4 Linux 系统运行时提示 Access denied
 
 1. 使用管理员权限运行即可，因为需要进行USB通信，所以会提示权限不足问题。
+
+# 6 特别说明
+
+如果本文档中的文件下载链接您无法打开或下载速度过慢请使用百度云进行尝试下载，如果仍然无法下载请联系技术支持并留下您的邮箱，我们会把文件打包发送至您的邮箱。
+
+百度云下载链接：
+
+链接：https://pan.baidu.com/s/1Gx0nUHvOJFJO3EC2g3hcsQ 
+提取码：a3ha 
+
+技术支持：1107795287@qq.com、codenocold@gmail.com

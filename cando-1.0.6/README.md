@@ -7,6 +7,7 @@ cando 手册
 `CANDO_MODE_LISTEN_ONLY` CAN 侦听模式
 `CANDO_MODE_LOOP_BACK` CAN 回环模式
 `CANDO_MODE_ONE_SHOT` CAN 发送失败后不自动重新发送模式
+`CANDO_MODE_NO_ECHO_BACK` CAN 发送数据帧后不向电脑返回echo帧 (默认为返回echo帧)
 
 ## CAN ID 标志位
 `CANDO_ID_MASK`用于和 Frame.can_id 按位`与`运算，得到 can id

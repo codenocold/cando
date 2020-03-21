@@ -1,0 +1,13 @@
+ChangeLog
+LICENSE
+MANIFEST.in
+README.md
+cando.py
+setup.py
+cando.egg-info/PKG-INFO
+cando.egg-info/SOURCES.txt
+cando.egg-info/dependency_links.txt
+cando.egg-info/requires.txt
+cando.egg-info/top_level.txt
+docs/faq.md
+docs/tutorial.md
