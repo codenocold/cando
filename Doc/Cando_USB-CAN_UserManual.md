@@ -200,7 +200,7 @@ sudo ip link set can0 type can bitrate 500000
 在命令终端中输入：
 
 ```shell
-sudo ip link set up
+sudo ip link set up can0
 ```
 
 ### 3.1.4 关闭can设备
@@ -208,7 +208,23 @@ sudo ip link set up
 在命令终端中输入：
 
 ```shell
-sudo ip link set down
+sudo ip link set down can0
+```
+
+### 3.1.5 区别不同can设备对应系统中的can编号
+
+当系统连接多个can设备或一个can设备有多路can时通过下边的命令来使对应的物理can设备上的 ACT 指示灯闪烁
+
+首先使用以下命令来安装工具软件：
+
+```shell
+sudo apt-get install ethtool
+```
+
+使can0对应的物理设备上的 ACT 指示灯闪烁：
+
+```shell
+sudo ethtool -p can0
 ```
 
 ## 3.2 SocketCAN实用程序
@@ -238,13 +254,13 @@ candump还可以使用掩码和标识符对接收到的can信息进行过滤。 
 仅显示can0上收到的ID为0x123的消息：
 
 ```shell
-candump vcan0,0x123:0x7FF
+candump can0,0x123:0x7FF
 ```
 
 仅显示can0上收到的ID为0x123或0x456的消息：
 
 ```shell
-candump vcan0,0x123:0x7FF,0x456:0x7FF 
+candump can0,0x123:0x7FF,0x456:0x7FF 
 ```
 
 ### 3.2.2 cansend
