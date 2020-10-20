@@ -1,0 +1,20 @@
+----------------------------------------------------------------------------------------------------------------------------------
+NCDrill File Report For: CandoPro_SET.PcbDoc   2020/10/20  12:13:49
+----------------------------------------------------------------------------------------------------------------------------------
+
+Layer Pair : Top Layer to Bottom Layer
+ASCII RoundHoles File : CandoPro_SET-RoundHoles.TXT
+ASCII SlotHoles File : CandoPro_SET-SlotHoles.TXT
+
+Tool       Hole Size               Hole Tolerance               Hole Type       Hole Count   Plated         Tool Travel
+----------------------------------------------------------------------------------------------------------------------------------
+T1      12mil (0.3mm)                                             Round             670       PTH        0.00inch (0.00mm)
+T2      16mil (0.4mm)                                             Round             80        PTH        0.00inch (0.00mm)
+T3      20mil (0.5mm)                                             Slot              20        PTH        0.00inch (0.00mm)
+T4      28mil (0.7mm)                                             Slot              20        PTH        0.00inch (0.00mm)
+T5      35mil (0.9mm)                                             Round             60        PTH        0.00inch (0.00mm)
+T6      79mil (2mm)                                               Round             4         PTH        0.00inch (0.00mm)
+----------------------------------------------------------------------------------------------------------------------------------
+Totals                                                                              854
+
+Total Processing Time (hh:mm:ss) : 00:00:01
